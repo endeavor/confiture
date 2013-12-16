@@ -32,11 +32,39 @@ void printList(List* list)
     }
 }
 
+List* reverseList(List* list)
+{
+// Ln->Ln->Ln
+// oL<-nL<-Ln
+// 0) We have pn = list head
+// NOTE: do not forget about first list->next = 0
+// 1) Save next node nn = node->next
+// 2) Assign node->next = pn
+// 3) Save previous node pn = node
+// 4) Go to next node = nn
+
+    List* pn = list;
+    if (!list)
+        return list;
+    List* node = list->next;
+    list->next = 0;
+    while(node) {
+        List* nn = node->next;
+        node->next = pn;
+        pn = node;
+        if (nn)
+            node = nn;
+        else
+            return node;
+    }
+    return list;
+}
+
 int main(int argc, char** argv)
 {
     int n = 10;
     List* list = createTestList(n);
+    list = reverseList(list);
     printList(list);
     return 0;
 }
-
